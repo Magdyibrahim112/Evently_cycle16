@@ -11,16 +11,21 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     required this.keyboardType,
     this.isSecure = false,
+    this.validator,
+    this.controller
   });
   final String labelText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType keyboardType;
   final bool isSecure;///Optional
-
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      validator: validator,
       obscureText: isSecure,
       style: GoogleFonts.inter(
         fontSize: 16.sp,
