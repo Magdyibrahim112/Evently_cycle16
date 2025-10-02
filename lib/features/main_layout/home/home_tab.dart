@@ -1,12 +1,90 @@
+import 'package:evently_app_online/core/resources/colors_manager.dart';
+import 'package:evently_app_online/core/widgets/custom_tab_bar.dart';
+import 'package:evently_app_online/core/widgets/custom_tab_item.dart';
+import 'package:evently_app_online/models/category_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  int SelectedIndex = 0;
+  @override
+  Widget build(BuildContext coSelectedIndexntext) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.r)),
+          ),
+          child: SafeArea(
+            left: false,
+            right: false,
+            bottom: false,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Welcome Back ✨",
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Text(
+                          "Magdy Ibrahim",
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.location_on, color: ColorsManager.white),
+                            Text(
+                              "Cairo , Egypt",
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Icon(Icons.light_mode, color: ColorsManager.white),
+                    SizedBox(width: 10.w),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "En",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12.h),
+                CustomTabBar(
+                  categories: CategoryModel.categoriesWithAll,
+                  selectedBgColor: Theme.of(context).colorScheme.primary,
+                  selectedFgColor: Theme.of(context).colorScheme.onPrimary,
+                  unSelectedBgColor: Theme.of(context).colorScheme.secondary,
+                  unSelectedFgColor: Theme.of(context).colorScheme.onSecondary,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
