@@ -15,6 +15,13 @@ class ThemeManager {
       onSecondary: ColorsManager.whiteBlue,
 
     ),
+    cardTheme: CardThemeData(
+      color: ColorsManager.whiteBlue,
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.r),
+      )
+    ),
     bottomAppBarTheme: BottomAppBarThemeData(
       color: ColorsManager.blue,
       elevation: 16,
@@ -102,6 +109,7 @@ class ThemeManager {
         fontWeight: FontWeight.w500,
         color: ColorsManager.black1C,
       ),
+
     ),
   );
   static final ThemeData dark = ThemeData(
