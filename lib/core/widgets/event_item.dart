@@ -1,8 +1,10 @@
+import 'package:evently_app_online/core/extensions/data_ex.dart';
 import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:evently_app_online/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class EventItem extends StatefulWidget {
   const EventItem({super.key, required this.event});
@@ -13,6 +15,19 @@ class EventItem extends StatefulWidget {
 }
 
 class _EventItemState extends State<EventItem> {
+  List<String> monthes = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov"
+  ];
   bool favourite = false;
 
   @override
@@ -41,7 +56,7 @@ class _EventItemState extends State<EventItem> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "21",
+                    widget.event.dateTime.viewDayNumber ,
                     style: GoogleFonts.inter(
                       fontSize: 20.sp,
                       color: ColorsManager.blue,
@@ -49,7 +64,8 @@ class _EventItemState extends State<EventItem> {
                     ),
                   ),
                   Text(
-                    "Nov",
+                    // الشهر هنقص منو واحد عشان انا عندى list بتبدا من ال 0 لى ال 11
+                    widget.event.dateTime.viewMonthName,
                     style: GoogleFonts.inter(
                       fontSize: 14.sp,
                       color: ColorsManager.blue,
@@ -87,5 +103,9 @@ class _EventItemState extends State<EventItem> {
         ],
       ),
     );
+  }
+  String viewMonthName(DateTime date){
+    DateFormat formatter = DateFormat("MMM");
+    return formatter.format(date);
   }
 }
