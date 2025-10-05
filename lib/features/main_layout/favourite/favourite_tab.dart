@@ -1,12 +1,58 @@
+import 'package:evently_app_online/core/resources/colors_manager.dart';
+import 'package:evently_app_online/core/widgets/event_item.dart';
+import 'package:evently_app_online/models/category_model.dart';
+import 'package:evently_app_online/models/event_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FavouriteTab extends StatelessWidget {
   const FavouriteTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder(
-      color: Colors.red,
+    return SafeArea(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search, color: ColorsManager.blue),
+                hintText: "Search for Event",
+                hintStyle: GoogleFonts.inter(
+                  fontSize: 14.sp,
+                  color: ColorsManager.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14.r),
+                  borderSide: BorderSide(color: ColorsManager.blue, width: 1.w),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14.r),
+                  borderSide: BorderSide(color: ColorsManager.blue, width: 1.w),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: 20,
+              itemBuilder: (context, index) => EventItem(
+                event: EventModel(
+                  category: CategoryModel.categories[2],
+                  title: "This is a Birthday Party ",
+                  description: "This is a Birthday Party ",
+                  dateTime: DateTime.now(),
+                  timeOfDay: TimeOfDay.now(),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
