@@ -130,11 +130,18 @@ class ThemeManager {
         fontSize: 16.sp,
         color: ColorsManager.black1C,
         fontWeight: FontWeight.w500,
-    )
+    ),
+      labelMedium: GoogleFonts.inter(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+        color: ColorsManager.black1C,
+      ),
+
+
 
   ),
   );
-  static final ThemeData dark = ThemeData(
+  static final ThemeData dark = ThemeData (
     useMaterial3: false,
     primaryColor: ColorsManager.darkBlue,
     scaffoldBackgroundColor: ColorsManager.whiteBlue,

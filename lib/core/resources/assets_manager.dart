@@ -10,5 +10,6 @@ abstract class ImageAssets {
   static const String exhibition = "${base}exhibition.png";
   static const String workshop = "${base}workshop.png";
   static const String bookClub = "${base}book_club.png";
+  static const String profileImage = "${base}profile_image.png";
 
 }
