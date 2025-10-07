@@ -1,4 +1,5 @@
 import 'package:evently_app_online/core/resources/colors_manager.dart';
+import 'package:evently_app_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_app_online/features/main_layout/favourite/favourite_tab.dart';
 import 'package:evently_app_online/features/main_layout/home/home_tab.dart';
 import 'package:evently_app_online/features/main_layout/map/map_tab.dart';
@@ -29,7 +30,9 @@ class _MainLayoutState extends State<MainLayout> {
   }
 
   FloatingActionButton _buildFat() {
-    return FloatingActionButton(onPressed: () {}, child: Icon(Icons.add));
+    return FloatingActionButton(onPressed: () {
+      Navigator.pushNamed(context, AppRoutes.createEvent);
+    }, child: Icon(Icons.add));
   }
 
   BottomAppBar _buildBottomAppBar() {

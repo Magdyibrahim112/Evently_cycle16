@@ -1,5 +1,6 @@
 import 'package:evently_app_online/features/authentication/login/login.dart';
 import 'package:evently_app_online/features/authentication/register/register.dart';
+import 'package:evently_app_online/features/create_event/create_event.dart';
 import 'package:evently_app_online/features/main_layout/main_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,10 @@ class RoutesManager {
       case AppRoutes.mainLayout:
         {
           return CupertinoPageRoute(builder: (context) => MainLayout());
+        }
+      case AppRoutes.createEvent:
+        {
+          return CupertinoPageRoute(builder: (context) => CreateEvent());
         }
     }
   }

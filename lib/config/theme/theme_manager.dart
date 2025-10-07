@@ -1,11 +1,18 @@
 import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeManager {
   static final ThemeData light = ThemeData(
     useMaterial3: false,
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorsManager.whiteBlue,
+      foregroundColor: ColorsManager.blue,
+      titleTextStyle: GoogleFonts.roboto(fontSize: 18.sp, color: ColorsManager.blue, fontWeight: FontWeight.w400,),
+      centerTitle: true,
+    ),
     primaryColor: ColorsManager.blue,
     scaffoldBackgroundColor: ColorsManager.whiteBlue,
     colorScheme: ColorScheme.fromSeed(seedColor: ColorsManager.blue,
@@ -61,6 +68,11 @@ class ThemeManager {
         fontWeight: FontWeight.w500,
         color: ColorsManager.grey,
       ),
+      hintStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.grey,
+      ),
       prefixIconColor: ColorsManager.grey,
       suffixIconColor: ColorsManager.grey,
     ),
@@ -109,8 +121,18 @@ class ThemeManager {
         fontWeight: FontWeight.w500,
         color: ColorsManager.black1C,
       ),
+      titleSmall: GoogleFonts.inter(
+        fontSize: 14.sp,
+        color: ColorsManager.black1C,
+        fontWeight: FontWeight.bold,
+      ),
+      titleMedium: GoogleFonts.inter(
+        fontSize: 16.sp,
+        color: ColorsManager.black1C,
+        fontWeight: FontWeight.w500,
+    )
 
-    ),
+  ),
   );
   static final ThemeData dark = ThemeData(
     useMaterial3: false,
