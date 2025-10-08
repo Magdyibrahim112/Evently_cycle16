@@ -33,7 +33,7 @@ class _CreateEventState extends State<CreateEvent> {
               ),
               SizedBox(height: 16.h),
               CustomTabBar(
-                onCategoryItemClicked: (category){
+                onCategoryItemClicked: (category) {
                   setState(() {
                     selectedCategory = category;
                   });
@@ -53,7 +53,10 @@ class _CreateEventState extends State<CreateEvent> {
                 keyboardType: TextInputType.text,
               ),
               SizedBox(height: 16.h),
-              Text("Description", style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                "Description",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               SizedBox(height: 8.h),
               CustomTextFormField(
                 hintText: "Event Description",
@@ -63,25 +66,44 @@ class _CreateEventState extends State<CreateEvent> {
               SizedBox(height: 16.h),
               Row(
                 children: [
-                  Icon(Icons.date_range_outlined, color: ColorsManager.black1C,),
-                  SizedBox(width: 4.w,),
-                  Text("Event Date", style: Theme.of(context).textTheme.titleMedium),
+                  Icon(Icons.date_range_outlined),
+                  SizedBox(width: 4.w),
+                  Text(
+                    "Event Date",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   Spacer(),
-                  CustomTextButton(text: "Choose Date", onTap: (){
-                    showDatePicker(context: context, firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
-                  }),
+                  CustomTextButton(
+                    text: "Choose Date",
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(Duration(days: 365)),
+                      );
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: 16.h),
               Row(
                 children: [
-                  Icon(Icons.date_range_outlined, color: ColorsManager.black1C,),
-                  SizedBox(width: 4.w,),
-                  Text("Event Time", style: Theme.of(context).textTheme.titleMedium),
+                  Icon(Icons.date_range_outlined),
+                  SizedBox(width: 4.w),
+                  Text(
+                    "Event Time",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   Spacer(),
-                  CustomTextButton(text: "Choose Time", onTap: (){
-                    showTimePicker(context: context, initialTime: TimeOfDay.now());
-                  }),
+                  CustomTextButton(
+                    text: "Choose Time",
+                    onTap: () {
+                      showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: 24.h),
@@ -93,7 +115,7 @@ class _CreateEventState extends State<CreateEvent> {
                 keyboardType: TextInputType.text,
               ),
               */
-              CustomElevatedButton(text: "Create Event", onPress: (){}),
+              CustomElevatedButton(text: "Create Event", onPress: () {}),
             ],
           ),
         ),

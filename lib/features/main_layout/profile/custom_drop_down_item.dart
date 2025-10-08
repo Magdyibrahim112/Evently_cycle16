@@ -4,10 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomDropDownItem extends StatelessWidget {
-  const CustomDropDownItem({super.key, required this.label, required this.selectedLabel, required this.menuItems});
-final String label;
-final String selectedLabel;
-final List<String> menuItems;
+  const CustomDropDownItem({
+    super.key,
+    required this.label,
+    required this.selectedLabel,
+    required this.menuItems,
+  });
+  final String label;
+  final String selectedLabel;
+  final List<String> menuItems;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,10 +20,7 @@ final List<String> menuItems;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
+          Text(label, style: Theme.of(context).textTheme.labelMedium),
           SizedBox(height: 16.h),
           Container(
             padding: REdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -40,11 +42,22 @@ final List<String> menuItems;
                 Spacer(),
                 //Switch(value: true, onChanged: (_){}),
                 DropdownButton(
+                  dropdownColor: ColorsManager.white,
+                  //borderRadius: BorderRadius.circular(8),
                   underline: Container(),
                   items: menuItems
                       .map(
-                        (item) =>
-                            DropdownMenuItem(value: item, child: Text(item)),
+                        (item) => DropdownMenuItem(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: GoogleFonts.inter(
+                              color: ColorsManager.black1C,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
                       )
                       .toList(),
                   onChanged: (selectedItem) {},

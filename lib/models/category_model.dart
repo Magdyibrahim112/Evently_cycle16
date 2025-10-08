@@ -28,7 +28,7 @@ class CategoryModel {
 
   ];
  static List<CategoryModel> categories = [
-    CategoryModel(id: "0", name: "All", icon: Icons.all_inclusive_rounded, imagePath: "imagePath"),
+    //CategoryModel(id: "0", name: "All", icon: Icons.all_inclusive_rounded, imagePath: "imagePath"),
    CategoryModel(id: "1", name: "Sports", icon: Icons.sports_football_rounded, imagePath: ImageAssets.sports),
    CategoryModel(id: "2", name: "Birthday", icon: Icons.cake_rounded, imagePath: ImageAssets.birthday),
    CategoryModel(id: "3", name: "Meeting", icon: Icons.laptop_mac_rounded, imagePath: ImageAssets.meeting),

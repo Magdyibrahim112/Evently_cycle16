@@ -21,7 +21,9 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType keyboardType;
-  final bool isSecure;///Optional
+  final bool isSecure;
+
+  ///Optional
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final int maxLines;
@@ -33,11 +35,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       validator: validator,
       obscureText: isSecure,
-      style: GoogleFonts.inter(
-        fontSize: 16.sp,
-        color: ColorsManager.black1C,
-        fontWeight: FontWeight.w400,
-      ),
+      style: Theme.of(context).textTheme.bodySmall,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,

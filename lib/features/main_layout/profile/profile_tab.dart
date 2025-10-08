@@ -68,7 +68,7 @@ class ProfileTab extends StatelessWidget {
           selectedLabel: "English",
           menuItems: ["English", "عربى"],
         ),
-        Spacer(flex: 7,),
+        Spacer(flex: 7),
         Container(
           margin: REdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
@@ -87,12 +87,12 @@ class ProfileTab extends StatelessWidget {
               children: [
                 Icon(Icons.logout),
                 SizedBox(width: 8.w),
-                Text("Logout",),
+                Text("Logout"),
               ],
             ),
           ),
         ),
-        Spacer(flex: 3,),
+        Spacer(flex: 3),
       ],
     );
   }
