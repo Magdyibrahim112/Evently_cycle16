@@ -1,5 +1,6 @@
 import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:evently_app_online/core/widgets/event_item.dart';
+import 'package:evently_app_online/l10n/app_localizations.dart';
 import 'package:evently_app_online/models/category_model.dart';
 import 'package:evently_app_online/models/event_model.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class FavouriteTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return SafeArea(
       child: Column(
         children: [
@@ -19,7 +21,7 @@ class FavouriteTab extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search, color: ColorsManager.blue),
-                hintText: "Search for Event",
+                hintText: appLocalizations.search_for_event,///search for event
                 hintStyle: GoogleFonts.inter(
                   fontSize: 14.sp,
                   color: ColorsManager.blue,
@@ -42,7 +44,7 @@ class FavouriteTab extends StatelessWidget {
               itemCount: 20,
               itemBuilder: (context, index) => EventItem(
                 event: EventModel(
-                  category: CategoryModel.categories[2],
+                  category: CategoryModel.getCategories(context)[2],
                   title: "This is a Birthday Party ",
                   description: "This is a Birthday Party ",
                   dateTime: DateTime.now(),

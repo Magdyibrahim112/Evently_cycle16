@@ -2,6 +2,7 @@ import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:evently_app_online/core/widgets/custom_tab_bar.dart';
 import 'package:evently_app_online/core/widgets/custom_tab_item.dart';
 import 'package:evently_app_online/core/widgets/event_item.dart';
+import 'package:evently_app_online/l10n/app_localizations.dart';
 import 'package:evently_app_online/models/category_model.dart';
 import 'package:evently_app_online/models/event_model.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _HomeTabState extends State<HomeTab> {
   int SelectedIndex = 0;
   @override
   Widget build(BuildContext coSelectedIndexntext) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Column(
       children: [
         Container(
@@ -42,7 +44,7 @@ class _HomeTabState extends State<HomeTab> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Welcome Back ✨",
+                          "${appLocalizations.welcome_back} ✨",///welcome back
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         Text(
@@ -82,7 +84,7 @@ class _HomeTabState extends State<HomeTab> {
                 ),
                 SizedBox(height: 12.h),
                 CustomTabBar(
-                  categories: CategoryModel.categoriesWithAll,
+                  categories: CategoryModel.getCategoriesWithAll(context),
                   selectedBgColor: ColorsManager.whiteBlue,
                   selectedFgColor: ColorsManager.blue,
                   unSelectedBgColor: Colors.transparent,
@@ -95,9 +97,10 @@ class _HomeTabState extends State<HomeTab> {
         ),
         Expanded(
           child: ListView.builder(
+            padding: EdgeInsets.zero,
             itemBuilder: (context, index) => EventItem(
               event: EventModel(
-                category: CategoryModel.categories[2],
+                category: CategoryModel.getCategories(context)[2],
                 title: "This is a Birthday Party ",
                 description: "This is a Birthday Party ",
                 dateTime: DateTime.now(),
