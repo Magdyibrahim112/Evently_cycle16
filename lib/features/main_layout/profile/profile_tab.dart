@@ -2,9 +2,12 @@ import 'package:evently_app_online/core/resources/assets_manager.dart';
 import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:evently_app_online/features/main_layout/profile/custom_drop_down_item.dart';
 import 'package:evently_app_online/l10n/app_localizations.dart';
+import 'package:evently_app_online/provider/language_provider.dart';
+import 'package:evently_app_online/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
@@ -12,6 +15,9 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    var themeProvider = Provider.of<ThemeProvider>(context);///كدا انا جبت ال object اللى اتكريت
+    var languageProvider = Provider.of<LanguageProvider>(context);///كدا انا جبت ال object اللى اتكريت
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -60,14 +66,20 @@ class ProfileTab extends StatelessWidget {
         ),
         SizedBox(height: 24.h),
         CustomDropDownItem(
+          onChange: (newTheme){
+            themeProvider.changeAppTheme(newTheme == appLocalizations.light? ThemeMode.light : ThemeMode.dark);
+          },
           label: appLocalizations.theme,///Theme
-          selectedLabel: appLocalizations.light,///Light
+          selectedLabel:themeProvider.isDark ?appLocalizations.dark : appLocalizations.light,///Light
           menuItems: [appLocalizations.light, appLocalizations.dark],///Light, Dark
         ),
         SizedBox(height: 16.h),
         CustomDropDownItem(
+          onChange: (newLang){
+            languageProvider.changAppLanguage(newLang == "English" ? "en" : "ar" );
+          },
           label: appLocalizations.language,///Language
-          selectedLabel: "English",///English
+          selectedLabel: languageProvider.isEnglish ? "English" : "عربى",///English
           menuItems: ["English", "عربى"],
         ),
         Spacer(flex: 7),

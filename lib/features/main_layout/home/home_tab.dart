@@ -5,9 +5,12 @@ import 'package:evently_app_online/core/widgets/event_item.dart';
 import 'package:evently_app_online/l10n/app_localizations.dart';
 import 'package:evently_app_online/models/category_model.dart';
 import 'package:evently_app_online/models/event_model.dart';
+import 'package:evently_app_online/provider/language_provider.dart';
+import 'package:evently_app_online/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -21,6 +24,9 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext coSelectedIndexntext) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    var themeProvider = Provider.of<ThemeProvider>(context);///كدا انا جبت ال object اللى اتكريت
+    var langProvider = Provider.of<LanguageProvider>(context);///كدا انا جبت ال object اللى اتكريت
+
     return Column(
       children: [
         Container(
@@ -64,17 +70,21 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     Spacer(),
                     IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.light_mode, color: ColorsManager.white),
+                      onPressed: () {
+                        themeProvider.changeAppTheme(themeProvider.isDark ? ThemeMode.dark : ThemeMode.light );
+                      },
+                      icon: Icon(themeProvider.isDark ? Icons.dark_mode_rounded : Icons.light_mode, color: ColorsManager.white),
                     ),
                     SizedBox(width: 10.w),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        langProvider.changAppLanguage(langProvider.isEnglish ? "ar" : "en");
+                      },
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "En",
+                             langProvider.isEnglish ? "En" : "Ar",
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
