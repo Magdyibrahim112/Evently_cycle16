@@ -1,17 +1,20 @@
 //import 'dart:js_interop';
 
 import 'package:evently_app_online/config/theme/theme_manager.dart';
+import 'package:evently_app_online/core/prefs_manager/prefs_manager.dart';
 import 'package:evently_app_online/core/routes_manager/app_routes.dart';
 import 'package:evently_app_online/core/routes_manager/routes_manager.dart';
 import 'package:evently_app_online/l10n/app_localizations.dart';
 import 'package:evently_app_online/provider/language_provider.dart';
 import 'package:evently_app_online/provider/theme_provider.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main()async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await PrefsManager.init();/// وظيفتها انها بتعمل inialize لل object
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context)=> ThemeProvider()),
