@@ -44,11 +44,12 @@ class FavouriteTab extends StatelessWidget {
               itemCount: 20,
               itemBuilder: (context, index) => EventItem(
                 event: EventModel(
+                  id: "",
                   category: CategoryModel.getCategories(context)[2],
                   title: "This is a Birthday Party ",
                   description: "This is a Birthday Party ",
                   dateTime: DateTime.now(),
-                  timeOfDay: TimeOfDay.now(),
+                  //timeOfDay: TimeOfDay.now(),
                 ),
               ),
             ),

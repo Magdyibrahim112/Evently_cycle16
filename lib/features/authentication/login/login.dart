@@ -2,10 +2,16 @@ import 'package:evently_app_online/core/resources/assets_manager.dart';
 import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:evently_app_online/core/resources/validators.dart';
 import 'package:evently_app_online/core/routes_manager/routes_manager.dart';
+import 'package:evently_app_online/core/ui_utils.dart';
 import 'package:evently_app_online/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app_online/core/widgets/custom_text_button.dart';
 import 'package:evently_app_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_app_online/firebase/firebase_service.dart';
 import 'package:evently_app_online/l10n/app_localizations.dart';
+import 'package:evently_app_online/models/login_request.dart';
+import 'package:evently_app_online/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -175,14 +181,31 @@ class _LoginState extends State<Login> {
   void _onTogglePasswordIconclicked() {
     ///كدا انا بدات ب true يعنى هتبقى بى secure
     /// اول ما دوس على ال Icon هتبقى
+    //#################################################
     /// ال securePassword بى false يعنى الباسورد هيبقى متشاف
+    ///FirebaseAuth.instance.currentUser;
+    /// يعنى انت لو عملت login ال currentUser هيبقى بيشاور على ال user فعلا
     setState(() {
       securePassword = !securePassword;
     });
   }
 
-  void _login() {
+  void _login() async{
     if(_formKey.currentState?.validate() == false )return;
+    try{
+      UIUtils.showLoading(context, isDismissible: false);
+      UserCredential userCredential = await FirebaseService.login(LoginRequest(email: _emailController.text, password: _passwordController.text));
+      UserModel.currentUser =await FirebaseService.getUserFromFireStore(userCredential.user!.uid);
 
+      UIUtils.hideDialog(context);
+      UIUtils.showToastMessage("User Logged-In Successfully", Colors.green);
+      Navigator.pushReplacementNamed(context, AppRoutes.mainLayout);
+    } on FirebaseAuthException catch(exception){
+      UIUtils.hideDialog(context);
+      UIUtils.showToastMessage("Invalid email or password", Colors.red);
+    }catch(exception){
+      UIUtils.hideDialog(context);
+      UIUtils.showToastMessage("Failed to login", Colors.red);
+    }
   }
 }

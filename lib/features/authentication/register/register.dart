@@ -3,10 +3,16 @@ import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:evently_app_online/core/resources/validators.dart';
 import 'package:evently_app_online/core/routes_manager/app_routes.dart';
 import 'package:evently_app_online/core/routes_manager/routes_manager.dart';
+import 'package:evently_app_online/core/ui_utils.dart';
 import 'package:evently_app_online/core/widgets/custom_elevated_button.dart';
 import 'package:evently_app_online/core/widgets/custom_text_button.dart';
 import 'package:evently_app_online/core/widgets/custom_text_form_field.dart';
+import 'package:evently_app_online/firebase/firebase_service.dart';
 import 'package:evently_app_online/l10n/app_localizations.dart';
+import 'package:evently_app_online/models/register_request.dart';
+import 'package:evently_app_online/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +42,7 @@ class _RegisterState extends State<Register> {
     _rePasswordController = TextEditingController();
     super.initState();
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -45,6 +52,7 @@ class _RegisterState extends State<Register> {
     _rePasswordController.dispose;
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
@@ -70,7 +78,9 @@ class _RegisterState extends State<Register> {
                     CustomTextFormField(
                       controller: _nameController,
                       validator: Validator.validateName,
-                      labelText: appLocalizations.name,///Name
+                      labelText: appLocalizations.name,
+
+                      ///Name
                       prefixIcon: Icon(Icons.person),
                       keyboardType: TextInputType.name,
                     ),
@@ -78,7 +88,9 @@ class _RegisterState extends State<Register> {
                     CustomTextFormField(
                       controller: _emailController,
                       validator: Validator.validateEmail,
-                      labelText: appLocalizations.email,///Email
+                      labelText: appLocalizations.email,
+
+                      ///Email
                       prefixIcon: Icon(Icons.email),
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -87,7 +99,9 @@ class _RegisterState extends State<Register> {
                       controller: _passwordController,
                       validator: Validator.validatePassword,
                       isSecure: securePassword,
-                      labelText: appLocalizations.password,///Password
+                      labelText: appLocalizations.password,
+
+                      ///Password
                       prefixIcon: Icon(Icons.lock),
                       keyboardType: TextInputType.visiblePassword,
                       suffixIcon: IconButton(
@@ -112,7 +126,9 @@ class _RegisterState extends State<Register> {
                         return null;
                       },
                       isSecure: secureRePassword,
-                      labelText: appLocalizations.re_password,///Re-Password
+                      labelText: appLocalizations.re_password,
+
+                      ///Re-Password
                       prefixIcon: Icon(Icons.lock),
                       keyboardType: TextInputType.visiblePassword,
                       suffixIcon: IconButton(
@@ -126,7 +142,9 @@ class _RegisterState extends State<Register> {
                     ),
                     SizedBox(height: 16.h),
                     CustomElevatedButton(
-                      text: appLocalizations.create_account,///Create Account
+                      text: appLocalizations.create_account,
+
+                      ///Create Account
                       onPress: _createAccount,
                     ),
                     SizedBox(height: 16.h),
@@ -134,11 +152,15 @@ class _RegisterState extends State<Register> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          appLocalizations.already_have_account,///Already Have Account ?
+                          appLocalizations.already_have_account,
+
+                          ///Already Have Account ?
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         CustomTextButton(
-                          text: appLocalizations.login,///Login
+                          text: appLocalizations.login,
+
+                          ///Login
                           onTap: () {
                             Navigator.pushReplacementNamed(
                               context,
@@ -158,7 +180,6 @@ class _RegisterState extends State<Register> {
     );
   }
 
-
   void _onTogglePasswordIconclicked() {
     setState(() {
       securePassword = !securePassword;
@@ -171,9 +192,31 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  void _createAccount() {
+  void _createAccount() async {
     /// اول حاجة هعمل check عليها انا المستخدم مدخل ايميل ولا لا
     /// ولو ال form هيبقى valid هقدر انشى ال account
     if (_formKey.currentState?.validate() == false) return;
+    try{
+      UIUtils.showLoading(context, isDismissible: false);
+      UserCredential userCredential =await FirebaseService.register(RegisterRequest(email: _emailController.text, password: _passwordController.text));
+      UserModel user = UserModel(id: userCredential.user!.uid, name: _nameController.text, email: _emailController.text);
+      await FirebaseService.addUserToFireStore(user);
+      /*
+      await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+       */
+      UIUtils.hideDialog(context);
+      UIUtils.showToastMessage("Successfully Registration", Colors.green);
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
+    }on FirebaseAuthException catch(exception){
+      UIUtils.hideDialog(context);
+      UIUtils.showToastMessage(exception.code, ColorsManager.red);
+    }catch(exception){
+      UIUtils.hideDialog(context);
+      UIUtils.showToastMessage("Failed To Register", ColorsManager.red);
+    }
   }
 }
