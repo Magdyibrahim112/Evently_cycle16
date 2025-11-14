@@ -1,5 +1,6 @@
 import 'package:evently_app_online/core/resources/colors_manager.dart';
 import 'package:evently_app_online/core/widgets/event_item.dart';
+import 'package:evently_app_online/firebase/firebase_service.dart';
 import 'package:evently_app_online/l10n/app_localizations.dart';
 import 'package:evently_app_online/models/category_model.dart';
 import 'package:evently_app_online/models/event_model.dart';
@@ -38,22 +39,28 @@ class FavouriteTab extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: 20,
-              itemBuilder: (context, index) => EventItem(
-                event: EventModel(
-                  id: "",
-                  category: CategoryModel.getCategories(context)[2],
-                  title: "This is a Birthday Party ",
-                  description: "This is a Birthday Party ",
-                  dateTime: DateTime.now(),
-                  //timeOfDay: TimeOfDay.now(),
+          FutureBuilder(future: FirebaseService.getFavouriteEvents(context),
+              builder: (context, snapshot){
+            /// snapshot بيعرفنى حالة البرنامج تى
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            if(snapshot.hasError){
+              return Center(child: Text(snapshot.error.toString()),);
+            }
+            List<EventModel> favouriteEvents = snapshot.data ?? [];
+            return Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: favouriteEvents.length,
+                itemBuilder: (context, index) => EventItem(
+                  event: favouriteEvents[index],
+                  markAsFavourite: true,
                 ),
               ),
-            ),
-          ),
+            );
+              }),
+
         ],
       ),
     );

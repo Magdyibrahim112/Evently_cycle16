@@ -130,13 +130,13 @@ class FirebaseService {
 
   static Future<List<EventModel>> getEventFromFireStore(
     BuildContext context,
-    CategoryModel category,
+    [CategoryModel? category]
   ) async {
     CollectionReference<EventModel> eventsCollection = _getEventsCollection(
       context,
     );
     QuerySnapshot<EventModel> querySnapshot = await eventsCollection
-        .where("categoryId", isEqualTo: category.id == "0" ? null : category.id)
+        .where("categoryId", isEqualTo: category?.id == "0" ? null : category?.id)
         .orderBy("dateTime")
         .get();
 
@@ -178,4 +178,27 @@ class FirebaseService {
     );
     yield* eventStream;
   }
-}
+
+  static Future <void> addEventToFavourite(EventModel event){
+    UserModel currentUser =  UserModel.currentUser!;
+    currentUser.favouriteEventIds.add(event.id);
+    CollectionReference<UserModel> usersCollection = _getUsersCollection();
+    DocumentReference<UserModel> userDocument = usersCollection.doc(currentUser.id);
+    return userDocument.set(currentUser);
+  }
+
+  static Future <void> removeEventFromFavourite(EventModel event){
+    UserModel currentUser =  UserModel.currentUser!;
+    currentUser.favouriteEventIds.remove(event.id);
+    CollectionReference<UserModel> usersCollection = _getUsersCollection();
+    DocumentReference<UserModel> userDocument = usersCollection.doc(currentUser.id);
+    return userDocument.set(currentUser);
+  }
+
+  static Future<List<EventModel>> getFavouriteEvents(BuildContext context)async{
+    List<EventModel> events =await getEventFromFireStore(context);
+    List<EventModel> favouriteEvents = events.where((event)=> UserModel.currentUser!.favouriteEventIds.contains(event.id)).toList();
+    return favouriteEvents;
+  }
+
+  }

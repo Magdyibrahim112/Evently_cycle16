@@ -157,6 +157,7 @@ class _HomeTabState extends State<HomeTab> {
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) => EventItem(
                   event: events[index],
+                  markAsFavourite: UserModel.currentUser!.favouriteEventIds.contains(events[index].id),/// عشان لما افتح البرنامج واقفلو يظل محتفظ بالفيفورت ايفنت
                   //EventModel(
                   //id: "",
                   //category: CategoryModel.getCategories(context)[2],

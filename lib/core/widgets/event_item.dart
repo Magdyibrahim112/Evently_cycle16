@@ -1,14 +1,17 @@
 import 'package:evently_app_online/core/extensions/data_ex.dart';
 import 'package:evently_app_online/core/resources/colors_manager.dart';
+import 'package:evently_app_online/firebase/firebase_service.dart';
 import 'package:evently_app_online/models/event_model.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class EventItem extends StatefulWidget {
-  const EventItem({super.key, required this.event});
+  const EventItem({super.key, required this.event, this.markAsFavourite});
   final EventModel event;
+  final bool? markAsFavourite;
 
   @override
   State<EventItem> createState() => _EventItemState();
@@ -28,7 +31,7 @@ class _EventItemState extends State<EventItem> {
     "Oct",
     "Nov"
   ];
-  bool favourite = false;
+  late bool favourite = widget.markAsFavourite ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +92,7 @@ class _EventItemState extends State<EventItem> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {
-                      setState(() {
-                        favourite = !favourite;
-                      });
-                    },
+                    onPressed: _markEventAsFavourite,
                     icon: Icon(favourite ?  Icons.favorite : Icons.favorite_border_outlined, color: ColorsManager.blue,),
                   ),
                 ],
@@ -107,5 +106,17 @@ class _EventItemState extends State<EventItem> {
   String viewMonthName(DateTime date){
     DateFormat formatter = DateFormat("MMM");
     return formatter.format(date);
+  }
+  void _markEventAsFavourite()async{
+    if(favourite){
+      FirebaseService.removeEventFromFavourite(widget.event);
+      favourite = false;
+    }else{
+      await FirebaseService.addEventToFavourite(widget.event);
+      favourite = true;
+    }
+    setState(() {
+
+    });
   }
 }

@@ -199,7 +199,7 @@ class _RegisterState extends State<Register> {
     try{
       UIUtils.showLoading(context, isDismissible: false);
       UserCredential userCredential =await FirebaseService.register(RegisterRequest(email: _emailController.text, password: _passwordController.text));
-      UserModel user = UserModel(id: userCredential.user!.uid, name: _nameController.text, email: _emailController.text);
+      UserModel user = UserModel(id: userCredential.user!.uid, name: _nameController.text, email: _emailController.text, favouriteEventIds: []);
       await FirebaseService.addUserToFireStore(user);
       /*
       await FirebaseAuth.instance
